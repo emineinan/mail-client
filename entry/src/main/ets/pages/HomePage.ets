@@ -1,7 +1,6 @@
 import { HomeViewModel } from '../viewmodel/HomeViewModel';
 import { MailFolder } from '../model/MailFolder';
 import { FolderItem } from '../view/FolderItem';
-import { SearchBar } from '../view/SearchBar';
 
 @Component
 export struct HomePage {
@@ -14,8 +13,12 @@ export struct HomePage {
         List() {
           ListItem() {
             Column() {
-              Blank().height(36)
-              SearchBar()
+              Blank().height(44)
+              Text('Mail')
+                .fontSize(24)
+                .fontWeight(FontWeight.Bold)
+                .fontColor(Color.White)
+                .margin({ bottom: 12 })
             }.width('100%')
           }
 
@@ -31,7 +34,7 @@ export struct HomePage {
           }, (folder: MailFolder): string => folder.id.toString())
 
           ListItem() {
-            Blank().height(36)
+            Blank().height(40)
           }
         }
         .width('100%')

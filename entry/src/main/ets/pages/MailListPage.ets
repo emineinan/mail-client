@@ -10,6 +10,7 @@ import { BusinessError } from '@kit.BasicServicesKit';
 export struct MailListPage {
   @State viewModel: MailListViewModel = new MailListViewModel();
   @State mailFolder: MailFolder = new MailFolder(0, '', $r('app.media.icon_all_mail'), 0);
+  @State searchQuery: string = '';
 
   @Consume('pageStack') pageStack: NavPathStack;
 
@@ -31,35 +32,50 @@ export struct MailListPage {
     }
   }
 
+  private getFilteredMails(): Mail[] {
+    const mails = this.viewModel.getMailsByFolder(this.mailFolder.id);
+    if (this.searchQuery.trim() === '') {
+      return mails;
+    }
+    const query = this.searchQuery.toLowerCase();
+    return mails.filter(mail =>
+      mail.sender.toLowerCase().includes(query) ||
+      mail.subject.toLowerCase().includes(query) ||
+      mail.preview.toLowerCase().includes(query)
+    );
+  }
+
   @Builder
-  SwipeActionButtons() {
+  SwipeActionButtons(mail: Mail) {
     Row() {
       Button() {
         Image($r('app.media.icon_trash'))
-          .width(20)
-          .height(20)
+          .width(18)
+          .height(18)
       }
       .type(ButtonType.Circle)
       .backgroundColor('#FF453A')
-      .width(40)
-      .height(40)
+      .width(36)
+      .height(36)
       .margin({ left: 8, right: 8 })
       .onClick(() => {
         this.triggerHapticFeedback();
+        this.viewModel.deleteMail(mail.id);
       })
 
       Button() {
         Image($r('app.media.icon_all_mail'))
-          .width(20)
-          .height(20)
+          .width(18)
+          .height(18)
       }
       .type(ButtonType.Circle)
       .backgroundColor('#30D158')
-      .width(40)
-      .height(40)
-      .margin({ right: 16 })
+      .width(36)
+      .height(36)
+      .margin({ right: 12 })
       .onClick(() => {
         this.triggerHapticFeedback();
+        this.viewModel.archiveMail(mail.id);
       })
     }
     .height('100%')
@@ -72,17 +88,17 @@ export struct MailListPage {
         List() {
           ListItem() {
             Column() {
-              Blank().height(36)
+              Blank().height(44)
               Text(this.mailFolder.name)
-                .fontSize(20)
+                .fontSize(22)
                 .fontWeight(FontWeight.Bold)
                 .fontColor(Color.White)
-                .margin({ bottom: 12 })
-              SearchBar()
+                .margin({ bottom: 8 })
+              SearchBar({ query: $searchQuery })
             }.width('100%')
           }
 
-          ForEach(this.viewModel.getMailsByFolder(this.mailFolder.id), (mail: Mail) => {
+          ForEach(this.getFilteredMails(), (mail: Mail) => {
             ListItem() {
               MailItem({
                 mail: mail,
@@ -90,11 +106,11 @@ export struct MailListPage {
                   this.pageStack.pushPathByName('MailDetailPage', mail);
                 } })
             }
-            .swipeAction({ end: this.SwipeActionButtons.bind(this) })
-          }, (mail: Mail): string => mail.id.toString())
+            .swipeAction({ end: this.SwipeActionButtons(mail) })
+          }, (mail: Mail): string => mail.id.toString() + this.viewModel.mails.length)
 
           ListItem() {
-            Blank().height(36)
+            Blank().height(40)
           }
         }
         .width('100%')

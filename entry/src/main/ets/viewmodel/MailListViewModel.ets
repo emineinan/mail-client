@@ -1,7 +1,8 @@
 import { Mail } from '../model/Mail';
 
+@Observed
 export class MailListViewModel {
-  private mails: Array<Mail> = [
+  public mails: Array<Mail> = [
   // Inbox mails
     new Mail(1, 1, 'John Smith', 'Project Update', 'Here are the latest updates for the project...', '10:30 AM', false, true),
     new Mail(2, 1, 'Alice Johnson', 'Meeting Tomorrow', 'Can we schedule a meeting tomorrow at 2 PM?', '9:15 AM', false),
@@ -25,5 +26,29 @@ export class MailListViewModel {
     return this.mails.filter(
       (mail: Mail): boolean => mail.folderId === folderId
     );
+  }
+
+  deleteMail(mailId: number): void {
+    const index = this.mails.findIndex(m => m.id === mailId);
+    if (index !== -1) {
+      if (this.mails[index].folderId === 4) {
+        // Permanently delete if already in Trash
+        this.mails.splice(index, 1);
+      } else {
+        // Move to Trash
+        this.mails[index].folderId = 4;
+      }
+      // Re-assign to trigger update if observed
+      this.mails = [...this.mails];
+    }
+  }
+
+  archiveMail(mailId: number): void {
+    const index = this.mails.findIndex(m => m.id === mailId);
+    if (index !== -1) {
+      this.mails[index].folderId = 0;
+      // Re-assign to trigger update if observed
+      this.mails = [...this.mails];
+    }
   }
 }

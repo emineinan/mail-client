@@ -30,31 +30,31 @@ export struct MailItem {
     Column() {
       Row() {
         Text(this.mail.sender)
-          .fontSize(16)
+          .fontSize(14)
           .fontWeight(this.mail.isRead ? FontWeight.Normal : FontWeight.Bold)
           .fontColor(Color.White)
           .layoutWeight(1)
 
         Text(this.mail.date)
-          .fontSize(12)
+          .fontSize(10)
           .fontColor('#8E8E93')
       }
       .width('100%')
 
       Text(this.mail.subject)
-        .fontSize(14)
+        .fontSize(13)
         .fontWeight(this.mail.isRead ? FontWeight.Normal : FontWeight.Medium)
         .fontColor(this.mail.isRead ? '#CCCCCC' : Color.White)
-        .margin({ top: 4 })
+        .margin({ top: 2 })
         .maxLines(1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
 
       Text(this.mail.preview)
-        .fontSize(12)
+        .fontSize(11)
         .fontColor('#8E8E93')
         .textOverflow({ overflow: TextOverflow.Ellipsis })
-        .maxLines(2)
-        .margin({ top: 4 })
+        .maxLines(1)
+        .margin({ top: 2 })
         .width('100%')
         .textAlign(TextAlign.Start)
     }
@@ -63,8 +63,8 @@ export struct MailItem {
       this.onMailClick(this.mail);
     })
     .width('100%')
-    .padding({ left: 16, right: 16, top: 12, bottom: 12 })
-    .borderRadius(20)
+    .padding({ left: 12, right: 12, top: 10, bottom: 10 })
+    .borderRadius(16)
     .backgroundColor('#1C1C1E')
     .alignItems(HorizontalAlign.Start)
   }
