@@ -11,10 +11,14 @@ export struct HomePage {
   build() {
     NavDestination() {
       Column() {
-        Blank()
-          .height(20)
-        SearchBar()
         List() {
+          ListItem() {
+            Column() {
+              Blank().height(36)
+              SearchBar()
+            }.width('100%')
+          }
+
           ForEach(this.viewModel.getMailFolders(), (folder: MailFolder) => {
             ListItem() {
               FolderItem({
@@ -25,21 +29,21 @@ export struct HomePage {
               })
             }
           }, (folder: MailFolder): string => folder.id.toString())
+
+          ListItem() {
+            Blank().height(36)
+          }
         }
-        .layoutWeight(1)
+        .width('100%')
+        .height('100%')
         .alignListItem(ListItemAlign.Center)
         .listDirection(Axis.Vertical)
-        .divider({ strokeWidth: 0 })
-        .margin({ bottom: 20 })
-        Blank()
-          .height(10)
+        .scrollBar(BarState.Off)
+        .edgeEffect(EdgeEffect.Spring)
       }
       .width('100%')
       .height('100%')
-      .padding(8)
       .backgroundColor('#000000')
-      .justifyContent(FlexAlign.Start)
-      .alignItems(HorizontalAlign.Center)
     }.onReady((ctx: NavDestinationContext) => {
       this.pageStack = ctx.pathStack;
     })

@@ -1,4 +1,6 @@
 import { MailFolder } from '../model/MailFolder';
+import { vibrator } from '@kit.SensorServiceKit';
+import { BusinessError } from '@kit.BasicServicesKit';
 
 @Component
 export struct FolderItem {
@@ -8,15 +10,15 @@ export struct FolderItem {
 
   build() {
     Row() {
-      Row({ space: 8 }) {
+      Row({ space: 12 }) {
         Image(this.folder.icon)
-          .width(18)
-          .height(18)
+          .width(24)
+          .height(24)
 
         Text(this.folder.name)
-          .fontSize(16)
+          .fontSize(18)
           .fontColor(Color.White)
-          .fontWeight(FontWeight.Normal)
+          .fontWeight(FontWeight.Medium)
       }
 
       if (this.folder.unreadCount > 0) {
@@ -24,26 +26,40 @@ export struct FolderItem {
           .fontSize(14)
           .fontColor(Color.White)
           .backgroundColor('#0A84FF')
-          .borderRadius(10)
-          .width(20)
-          .height(20)
+          .borderRadius(12)
+          .width(24)
+          .height(24)
           .textAlign(TextAlign.Center)
-          .margin({ left: 8 })
       }
 
     }
-    .width('80%')
+    .width('90%')
     .padding({
-      left: 12,
-      right: 12,
-      top: 10,
-      bottom: 10
+      left: 16,
+      right: 16,
+      top: 14,
+      bottom: 14
     })
     .justifyContent(FlexAlign.SpaceBetween)
-    .borderRadius(16)
-    .backgroundColor('#242426')
-    .margin({ top: 4, bottom: 4 })
+    .borderRadius(20)
+    .backgroundColor('#1C1C1E')
+    .margin({ top: 6, bottom: 6 })
     .onClick(() => {
+      try {
+        vibrator.startVibration({
+          type: 'time',
+          duration: 50,
+        }, {
+          id: 0,
+          usage: 'touch'
+        }, (error: BusinessError) => {
+          if (error) {
+            console.error(`Failed to start vibration. Code: ${error.code}, message: ${error.message}`);
+          }
+        });
+      } catch (err) {
+        console.error('An unexpected error occurred while attempting to vibrate:', err);
+      }
       this.onFolderClick(this.folder);
     })
   }
