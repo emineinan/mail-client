@@ -5,31 +5,31 @@ export struct SearchBar {
   build() {
     Row() {
       Image($r('app.media.icon_search'))
-        .width(16)
-        .height(16)
+        .width(14)
+        .height(14)
         .margin({ right: 6 })
 
       TextInput({ text: this.query, placeholder: 'Search' })
-        .fontSize(14)
+        .fontSize(12)
         .placeholderColor('#8E8E93')
         .fontColor(Color.White)
         .backgroundColor(Color.Transparent)
         .padding(0)
         .layoutWeight(1)
-        .height(20)
+        .height(18)
         .onChange((value: string) => {
           this.query = value
         })
     }
     .width('90%')
     .padding({
-      left: 12,
-      right: 12,
-      top: 8,
-      bottom: 8
+      left: 10,
+      right: 10,
+      top: 6,
+      bottom: 6
     })
-    .borderRadius(16)
+    .borderRadius(14)
     .backgroundColor('#1C1C1E')
-    .margin({ top: 4, bottom: 4 })
+    .margin({ top: 3, bottom: 3 })
   }
 }

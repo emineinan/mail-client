@@ -50,14 +50,14 @@ export struct MailListPage {
     Row() {
       Button() {
         Image($r('app.media.icon_trash'))
-          .width(18)
-          .height(18)
+          .width(16)
+          .height(16)
       }
       .type(ButtonType.Circle)
       .backgroundColor('#FF453A')
-      .width(36)
-      .height(36)
-      .margin({ left: 8, right: 8 })
+      .width(32)
+      .height(32)
+      .margin({ left: 6, right: 6 })
       .onClick(() => {
         this.triggerHapticFeedback();
         this.viewModel.deleteMail(mail.id);
@@ -65,14 +65,14 @@ export struct MailListPage {
 
       Button() {
         Image($r('app.media.icon_all_mail'))
-          .width(18)
-          .height(18)
+          .width(16)
+          .height(16)
       }
       .type(ButtonType.Circle)
       .backgroundColor('#30D158')
-      .width(36)
-      .height(36)
-      .margin({ right: 12 })
+      .width(32)
+      .height(32)
+      .margin({ right: 10 })
       .onClick(() => {
         this.triggerHapticFeedback();
         this.viewModel.archiveMail(mail.id);
@@ -90,10 +90,10 @@ export struct MailListPage {
             Column() {
               Blank().height(44)
               Text(this.mailFolder.name)
-                .fontSize(22)
+                .fontSize(20)
                 .fontWeight(FontWeight.Bold)
                 .fontColor(Color.White)
-                .margin({ bottom: 8 })
+                .margin({ bottom: 6 })
               SearchBar({ query: $searchQuery })
             }.width('100%')
           }
@@ -129,6 +129,7 @@ export struct MailListPage {
       if (params) {
         this.mailFolder = params;
       }
+      this.viewModel.initPreferences(ctx.pathStack.getContext());
     })
     .hideBackButton(true)
   }

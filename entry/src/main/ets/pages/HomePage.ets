@@ -1,11 +1,13 @@
 import { HomeViewModel } from '../viewmodel/HomeViewModel';
 import { MailFolder } from '../model/MailFolder';
 import { FolderItem } from '../view/FolderItem';
+import { MailListViewModel } from '../viewmodel/MailListViewModel';
 
 @Component
 export struct HomePage {
   @Consume('pageStack') pageStack: NavPathStack;
   @State viewModel: HomeViewModel = new HomeViewModel();
+  @State mailListViewModel: MailListViewModel = new MailListViewModel();
 
   build() {
     NavDestination() {
@@ -15,10 +17,10 @@ export struct HomePage {
             Column() {
               Blank().height(44)
               Text('Mail')
-                .fontSize(24)
+                .fontSize(22)
                 .fontWeight(FontWeight.Bold)
                 .fontColor(Color.White)
-                .margin({ bottom: 12 })
+                .margin({ bottom: 8 })
             }.width('100%')
           }
 
@@ -49,6 +51,7 @@ export struct HomePage {
       .backgroundColor('#000000')
     }.onReady((ctx: NavDestinationContext) => {
       this.pageStack = ctx.pathStack;
+      this.mailListViewModel.initPreferences(ctx.pathStack.getContext());
     })
     .hideBackButton(true)
   }
