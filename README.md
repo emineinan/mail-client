@@ -13,15 +13,24 @@ MailClient is a smartwatch application built with HarmonyOS ArkTS/ArkUI, designe
   <img src="screenshots/ss4.png" width="24%">
 </div>
 
+# Key Features
+
+- **Compact Wearable UI**: Optimized for circular displays with high-contrast typography and appropriate safe-zone management.
+- **Local Persistence**: Integrated with ArkData Preferences to save email states (Trash, Sent) across application restarts.
+- **Swipe-to-Action**: Quick access to Delete and Archive actions through intuitive list gestures.
+- **Smart Contextual Replies**: One-tap response options for efficient communication on small screens.
+- **Haptic Feedback**: Tactile interaction support for a more engaging and responsive user experience.
+- **Functional Search**: Real-time email filtering on list pages to quickly find relevant messages.
+
 # Use Cases
-Quickly preview how emails look on a smartwatch. Open and read a single message in a compact format.
+Quickly preview how emails look on a smartwatch. Manage your inbox with gestures and send quick replies in a compact format while on the go.
 
 # Tech Stack
 
 - **Languages**: ArkTS, Typescript
 - **Frameworks**: HarmonyOS SDK 5.0.2(14)
 - **Tools**: DevEco Studio Vers 5.1.0.842
-- **Libraries**: @kit.ArkUI
+- **Libraries**: @kit.ArkUI, @kit.ArkData, @kit.SensorServiceKit
 
 # Directory Structure
 

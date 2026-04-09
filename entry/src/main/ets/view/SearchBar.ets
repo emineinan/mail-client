@@ -1,13 +1,13 @@
 @Component
 export struct SearchBar {
-  @State query: string = ''
+  @Link query: string
 
   build() {
     Row() {
       Image($r('app.media.icon_search'))
-        .width(18)
-        .height(18)
-        .margin({ right: 8 })
+        .width(14)
+        .height(14)
+        .margin({ right: 6 })
 
       TextInput({ text: this.query, placeholder: 'Search' })
         .fontSize(12)
@@ -16,16 +16,20 @@ export struct SearchBar {
         .backgroundColor(Color.Transparent)
         .padding(0)
         .layoutWeight(1)
+        .height(18)
+        .onChange((value: string) => {
+          this.query = value
+        })
     }
-    .width('80%')
+    .width('90%')
     .padding({
-      left: 12,
-      right: 12,
-      top: 10,
-      bottom: 10
+      left: 10,
+      right: 10,
+      top: 6,
+      bottom: 6
     })
-    .borderRadius(16)
-    .backgroundColor('#242426')
-    .margin({ top: 10, bottom: 10 })
+    .borderRadius(14)
+    .backgroundColor('#1C1C1E')
+    .margin({ top: 3, bottom: 3 })
   }
 }
